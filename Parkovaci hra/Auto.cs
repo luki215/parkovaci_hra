@@ -17,10 +17,10 @@ namespace Parkovaci_hra
        
         class Vlastnosti
         {
-            public int pridani_plynu_v_kazdem_kroku = 200;
+            public int pridani_plynu_v_kazdem_kroku = 100;
             public int maximalni_plyn = 5000;
-            public int minimalni_plyn = -5000;
-            public int max_otoceni = 89;
+            public int minimalni_plyn = -3000;
+            public int max_otoceni = 45;
 
             
         }
@@ -189,6 +189,7 @@ namespace Parkovaci_hra
                 //quality image once it is transformed to the specified size
                 gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 //now draw our new image onto the graphics object
+
                 gfx.DrawImage(obrazek, new Point((3*max)/2 - obrazek.Size.Width / 2, (3 * max) / 2 - obrazek.Size.Height/2));
 
                 //dispose of our Graphics object
@@ -219,8 +220,8 @@ namespace Parkovaci_hra
                 //stav.Plyn/1000 = delka vektoru pohybu
                 //stav.UhelNatoceni = uhel vektoru pohybu;
 
-                 stav.pozice.X += (float) (Math.Sin((Math.PI / 180) * stav.UhelNatoceni) * stav.Plyn / 1000); 
-                stav.pozice.Y -= (float)(Math.Cos((Math.PI / 180) * stav.UhelNatoceni) * stav.Plyn / 1000);
+                stav.pozice.X += (float) (Math.Sin((Math.PI / 180) * stav.UhelNatoceni) * (stav.Plyn / 1000) ); 
+                stav.pozice.Y -= (float) (Math.Cos((Math.PI / 180) * stav.UhelNatoceni) * (stav.Plyn / 1000) );
 
                 Console.WriteLine(stav.pozice.ToString());
                 //Console.WriteLine(stav.UhelNatoceni + " SIN: " + Math.Sin(stav.UhelNatoceni).ToString() +  " COS: " + Math.Cos(stav.UhelNatoceni));
