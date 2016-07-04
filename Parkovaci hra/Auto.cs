@@ -17,7 +17,7 @@ namespace Parkovaci_hra
        
         class Vlastnosti
         {
-            public int pridani_plynu_v_kazdem_kroku = 25;
+            public int pridani_plynu_v_kazdem_kroku = 200;
             public int maximalni_plyn = 5000;
             public int minimalni_plyn = -5000;
             public int max_otoceni = 89;
@@ -89,10 +89,10 @@ namespace Parkovaci_hra
             public void SpoctiPlyn()
             {
                 //at nam plyn roste dle kvadraticky
-                int hodnota_plynu = (int)Math.Sqrt(Math.Abs(stav.Plyn)) * Math.Sign(stav.Plyn);
-                int pridavek = (int)Math.Sqrt(vlastnosti.pridani_plynu_v_kazdem_kroku);
-                int max_plyn = (int)Math.Sqrt(vlastnosti.maximalni_plyn);
-                int min_plyn = -1* (int)Math.Sqrt(Math.Abs(vlastnosti.minimalni_plyn));
+                int hodnota_plynu = stav.Plyn;
+                int pridavek = vlastnosti.pridani_plynu_v_kazdem_kroku;
+                int max_plyn = vlastnosti.maximalni_plyn;
+                int min_plyn = vlastnosti.minimalni_plyn;
                 StisknuteSipky.Zjisti();
 
                 //pridavame
@@ -108,8 +108,8 @@ namespace Parkovaci_hra
                 //volnobeh
                 else
                 {
-                    hodnota_plynu -= Math.Sign(hodnota_plynu) * pridavek;
-                    if (Math.Abs(hodnota_plynu) <= pridavek)
+                    hodnota_plynu -= Math.Sign(hodnota_plynu) * pridavek * 2;
+                    if (Math.Abs(hodnota_plynu) <= pridavek * 2)
                         hodnota_plynu = 0;
                 }
 
@@ -120,7 +120,7 @@ namespace Parkovaci_hra
                 if (hodnota_plynu < min_plyn)
                     hodnota_plynu = min_plyn;
 
-                stav.Plyn = (hodnota_plynu * hodnota_plynu) * Math.Sign(hodnota_plynu);
+                stav.Plyn = hodnota_plynu;
 
             }
 
