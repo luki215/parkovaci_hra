@@ -55,7 +55,7 @@ namespace Parkovaci_hra
                 }
             }
 
-            public Point pozice = new Point(600, 400);
+            public PointF pozice = new PointF(500, 200);
             private float _uhel_natoceni = 0;
             public float UhelNatoceni {
                 get { return _uhel_natoceni; }
@@ -152,14 +152,14 @@ namespace Parkovaci_hra
 
             public void SpoctiUhelAuta()
             {
-                stav.UhelNatoceni += ((float)stav.UhelKol / 90) * 2 * stav.Plyn / vlastnosti.maximalni_plyn;
+                stav.UhelNatoceni += ((float)stav.UhelKol / 90) * 4 * ((float)stav.Plyn / vlastnosti.maximalni_plyn);
             }
             public Bitmap VratOtoceneAuto()
             {
-               
+                int max = Math.Max(obrazek.Width, obrazek.Height);
 
                 //create an empty Bitmap image
-                Bitmap bmp = new Bitmap(obrazek.Width * 2, obrazek.Height * 2);
+                Bitmap bmp = new Bitmap(max * 3, max * 3);
 
                 //turn the Bitmap into a Graphics object
                 Graphics gfx = Graphics.FromImage(bmp);
@@ -188,9 +188,8 @@ namespace Parkovaci_hra
                 //set the InterpolationMode to HighQualityBicubic so to ensure a high
                 //quality image once it is transformed to the specified size
                 gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
                 //now draw our new image onto the graphics object
-                gfx.DrawImage(obrazek, new Point(obrazek.Size.Width / 2, obrazek.Size.Height / 2));
+                gfx.DrawImage(obrazek, new Point((3*max)/2 - obrazek.Size.Width / 2, (3 * max) / 2 - obrazek.Size.Height/2));
 
                 //dispose of our Graphics object
                 gfx.Dispose();
@@ -220,12 +219,16 @@ namespace Parkovaci_hra
                 //stav.Plyn/1000 = delka vektoru pohybu
                 //stav.UhelNatoceni = uhel vektoru pohybu;
 
-                stav.pozice.X += (int) (Math.Sin((Math.PI / 180) * stav.UhelNatoceni) * stav.Plyn / 1000); 
-                stav.pozice.Y -= (int) (Math.Cos((Math.PI / 180) * stav.UhelNatoceni) * stav.Plyn / 1000);
+                 stav.pozice.X += (float) (Math.Sin((Math.PI / 180) * stav.UhelNatoceni) * stav.Plyn / 1000); 
+                stav.pozice.Y -= (float)(Math.Cos((Math.PI / 180) * stav.UhelNatoceni) * stav.Plyn / 1000);
+
                 Console.WriteLine(stav.pozice.ToString());
                 //Console.WriteLine(stav.UhelNatoceni + " SIN: " + Math.Sin(stav.UhelNatoceni).ToString() +  " COS: " + Math.Cos(stav.UhelNatoceni));
-
+                
                 g.DrawImage(rotatedBmp, stav.pozice);
+
+
+
             }
         }
 
