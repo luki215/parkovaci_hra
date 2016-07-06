@@ -82,7 +82,7 @@ namespace Parkovaci_hra
                 {
                     String obrazek_cesta = "obrazky\\" + sr.ReadLine().Split(':')[1].Substring(1);
                     obrazek = new Bitmap(obrazek_cesta);
-                    obrazek = new Bitmap(obrazek, new Size(obrazek.Size.Width/2, obrazek.Size.Height/2)); 
+                    obrazek = new Bitmap(obrazek, new Size(obrazek.Size.Width, obrazek.Size.Height)); 
                 }
 
             }
@@ -189,7 +189,7 @@ namespace Parkovaci_hra
                 //quality image once it is transformed to the specified size
                 gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 //now draw our new image onto the graphics object
-
+               
                 gfx.DrawImage(obrazek, new Point((3*max)/2 - obrazek.Size.Width / 2, (3 * max) / 2 - obrazek.Size.Height/2));
 
                 //dispose of our Graphics object
@@ -221,8 +221,7 @@ namespace Parkovaci_hra
                 stav.pozice.X += (float) (Math.Sin((Math.PI / 180) * stav.UhelNatoceni) * (stav.Plyn / 1000) ); 
                 stav.pozice.Y -= (float) (Math.Cos((Math.PI / 180) * stav.UhelNatoceni) * (stav.Plyn / 1000) );
 
-                Console.WriteLine(stav.pozice.ToString());
-
+                
 
                 //return
                 obrazek_auta = rotatedBmp;
