@@ -55,7 +55,7 @@ namespace Parkovaci_hra
                 }
             }
 
-            public PointF pozice = new PointF(500, 200);
+            public PointF pozice = new PointF(-120, 340);
             private float _uhel_natoceni = 0;
             public float UhelNatoceni {
                 get { return _uhel_natoceni; }
@@ -201,7 +201,7 @@ namespace Parkovaci_hra
 
 
 
-            public void Krok()
+            public void Krok(out Bitmap obrazek_auta, out PointF pozice)
             {
                 SpoctiPlyn();
                 SpoctiUhelKol();
@@ -214,9 +214,7 @@ namespace Parkovaci_hra
                 rotatedBmp = VratOtoceneAuto();
 
                 
-                g.DrawImage(new Bitmap("obrazky\\pozadi.png"), 0, 0);
-
-
+                
                 //stav.Plyn/1000 = delka vektoru pohybu
                 //stav.UhelNatoceni = uhel vektoru pohybu;
 
@@ -224,10 +222,12 @@ namespace Parkovaci_hra
                 stav.pozice.Y -= (float) (Math.Cos((Math.PI / 180) * stav.UhelNatoceni) * (stav.Plyn / 1000) );
 
                 Console.WriteLine(stav.pozice.ToString());
-                //Console.WriteLine(stav.UhelNatoceni + " SIN: " + Math.Sin(stav.UhelNatoceni).ToString() +  " COS: " + Math.Cos(stav.UhelNatoceni));
-                
-                g.DrawImage(rotatedBmp, stav.pozice);
 
+
+                //return
+                obrazek_auta = rotatedBmp;
+                pozice = stav.pozice;
+                
 
 
             }

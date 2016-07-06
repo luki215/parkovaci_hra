@@ -16,13 +16,14 @@ namespace Parkovaci_hra
     {
         Auto.Auto a;
 
+        Graphics g;
         Bitmap frame = new Bitmap(980, 600);
         public Form1()
         {
             InitializeComponent();
             this.ClientSize = new Size(980, 600);
             
-            Graphics g = Graphics.FromImage(frame);
+            g = Graphics.FromImage(frame);
             this.DoubleBuffered = true;
             a = new Auto.Auto("Auto.txt", g);
 
@@ -37,8 +38,29 @@ namespace Parkovaci_hra
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-           
-            a.Krok();
+
+            //vykreslime mapu
+            g.DrawImage(new Bitmap("obrazky\\mapy\\MAPA1.png"), 0, 0);
+
+
+            Bitmap auto;
+            PointF pozice;
+            a.Krok(out auto, out pozice);
+
+            
+            //vykreslime auto
+            g.DrawImage(auto, pozice);
+
+
+            //vykreslime prekazky
+            g.DrawImage(new Bitmap("obrazky\\mapy\\prekazky1.png"), 0, 0);
+
+
+            //zjistime kolize
+
+
+
+
             textBox1.Text = a.stav.UhelKol.ToString();
             trackBar1.Value = a.stav.UhelKol;
             this.Invalidate();

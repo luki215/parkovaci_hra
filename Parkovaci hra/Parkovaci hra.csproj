@@ -92,6 +92,12 @@
     <Content Include="obrazky\auto.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="obrazky\mapy\MAPA1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="obrazky\mapy\prekazky1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="obrazky\pozadi.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
