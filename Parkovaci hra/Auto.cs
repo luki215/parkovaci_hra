@@ -201,7 +201,7 @@ namespace Parkovaci_hra
 
 
 
-            public void Krok(out Bitmap obrazek_auta, out PointF pozice)
+            public void Krok(out Bitmap obrazek_auta, out Point pozice)
             {
                 SpoctiPlyn();
                 SpoctiUhelKol();
@@ -225,7 +225,7 @@ namespace Parkovaci_hra
 
                 //return
                 obrazek_auta = rotatedBmp;
-                pozice = stav.pozice;
+                pozice = new Point((int) stav.pozice.X, (int) stav.pozice.Y);
                 
 
 
