@@ -39,14 +39,17 @@ namespace Parkovaci_hra
         private void timer1_Tick(object sender, EventArgs e)
         {
 
+            /* TODO 
+            myslím že tohle by měla řešit už nějaká metoda... pravděpodobně ve hře */
+
             //vykreslime mapu
             g.DrawImage(new Bitmap("obrazky\\mapy\\MAPA1.png"), 0, 0);
 
 
             Bitmap auto;
-            PointF pozice;
-            a.Krok(out auto, out pozice);
-
+            PointF pozice_float;
+            a.Krok(out auto, out pozice_float);
+            Point pozice = new Point((int)pozice_float.X, (int)pozice_float.Y);
                        
             //vykreslime auto
             g.DrawImage(auto, pozice.X, pozice.Y);
@@ -59,12 +62,13 @@ namespace Parkovaci_hra
 
 
 
-
+            /* TODO:
+            Tohle nějak předělat a nejlépe asi strčit, ať si pořeší kolize, nebo něco jiného */
 
             //co kdyz je auto mimo obraz
 
-            PointF levy_horni = new PointF(0, 0);
-            SizeF pravy_dolni = auto.Size;
+            Point levy_horni = new Point(0, 0);
+            Size pravy_dolni = auto.Size;
 
             if (pozice.X < 0)
             {
@@ -81,7 +85,7 @@ namespace Parkovaci_hra
             if (pozice.Y + auto.Height > 600)
                 pravy_dolni.Height = -pozice.Y + 600; ;
 
-            auto = auto.Clone(new RectangleF(levy_horni, pravy_dolni), System.Drawing.Imaging.PixelFormat.DontCare);
+            auto = auto.Clone(new Rectangle(levy_horni, pravy_dolni), System.Drawing.Imaging.PixelFormat.DontCare);
 
             //Console.WriteLine(auto.Size);
             //zjistime kolize
@@ -90,13 +94,14 @@ namespace Parkovaci_hra
 
             //dostaneme vyrez bitmapy s autem
                  
-            Bitmap vyrez = frame.Clone(new RectangleF(levy_horni.X + pozice.X, levy_horni.Y + pozice.Y, pravy_dolni.Width, pravy_dolni.Height), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+            Bitmap vyrez = frame.Clone(new Rectangle(levy_horni.X + pozice.X, levy_horni.Y + pozice.Y, pravy_dolni.Width, pravy_dolni.Height), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+            
+            Kolize.Kolize.BylaKolize(ref vyrez);
 
-            //Console.WriteLine(vyrez.Size);
-            Console.WriteLine(Kolize.Kolize.BylaKolize(ref vyrez));
-            g.DrawImage(vyrez, new Point(10, 20));
-            g.DrawRectangle(Pens.White, new Rectangle(new Point(400, 20), auto.Size));
-            g.DrawImage(auto, new Point(400, 20));
+            Kolize.Kolize.NactiPotrebneBodyProOvereniCile();
+            Console.WriteLine(Kolize.Kolize.JsmeVCili(ref vyrez));
+
+            g.DrawImage(vyrez, 200, 20);
 
 
             textBox1.Text = a.stav.UhelKol.ToString();
