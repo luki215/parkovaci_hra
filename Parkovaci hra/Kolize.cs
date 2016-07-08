@@ -110,7 +110,7 @@ namespace Parkovaci_hra
             static PotrebnyPixel[] hranice_auta;
             static int sirka_obrazku;
             static int vyska_obrazku;
-            static Color barva_cile = ((Levely.Level)Hra.levely.levely[Hra.levely.aktualni_level]).barva_cile;
+            public static Color barva_cile;
             
             public static void NactiAuto(Bitmap auto)
             {

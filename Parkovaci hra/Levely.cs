@@ -34,6 +34,7 @@ namespace Parkovaci_hra
             public void NastavLevel(int cislo)
             {
                ((Level)levely[cislo]).NactiSe();
+                aktualni_level = cislo;
             }
 
             public void VykresliPozadiLevelu()
@@ -76,9 +77,9 @@ namespace Parkovaci_hra
                     uhel_auta = Int32.Parse(sr.ReadLine().Split(':')[1]);
 
                     cteni = sr.ReadLine().Split(':')[1].Substring(1);
-                    int r = Int32.Parse(cteni.Split(',')[0].Substring(1)),
-                        g = Int32.Parse(cteni.Split(',')[1].Substring(1)),
-                        b = Int32.Parse(cteni.Split(',')[1].Substring(1));
+                    int r = Int32.Parse(cteni.Split(',')[0]),
+                        g = Int32.Parse(cteni.Split(',')[1]),
+                        b = Int32.Parse(cteni.Split(',')[2]);
 
                     barva_cile = Color.FromArgb(r, g, b);
 
@@ -89,6 +90,7 @@ namespace Parkovaci_hra
             public void NactiSe()
             {
                 Hra.a = new Auto.Auto(cesta_k_autu, pozice_auta, uhel_auta);
+                Kolize.Kolize.barva_cile = barva_cile;
             }
         }
     }

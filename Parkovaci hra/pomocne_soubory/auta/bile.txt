@@ -1,0 +1,6 @@
+﻿Obrázek: bile.png
+Přidání plynu v každém kroku: 200
+Maximální plyn: 5000
+Minimalní plyn: -3000
+Max otočení: 80
+Rychlost otáčení: 10

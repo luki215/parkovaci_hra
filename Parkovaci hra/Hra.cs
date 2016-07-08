@@ -61,7 +61,7 @@ namespace Parkovaci_hra
 
                 //zkontrolujeme jestli se neco stalo
                 StavHry novyStav = Kolize.Kolize.VratStavHry(auto, pozice);
-                Console.WriteLine(stav);
+                Console.WriteLine(levely.aktualni_level);
                 if (novyStav != StavHry.bezi)
                     Stavy.ZmenStavHryNa(novyStav);
 
@@ -295,7 +295,6 @@ namespace Parkovaci_hra
             znovu.MouseLeave += new EventHandler(tlacitko_hoverPozadiOut);
             znovu.MouseDown += new MouseEventHandler(tlacitko_mysKlikPozadi);
             znovu.MouseUp += new MouseEventHandler(tlacitko_mysOdklikPozadi);
-            znovu.Tag = Hra.levely.aktualni_level;
             znovu.Click += tlacitko_prepni_Bezi_Click;
 
             kolize.Controls.Add(znovu);
@@ -345,14 +344,18 @@ namespace Parkovaci_hra
             znovu.MouseLeave += new EventHandler(tlacitko_hoverPozadiOut);
             znovu.MouseDown += new MouseEventHandler(tlacitko_mysKlikPozadi);
             znovu.MouseUp += new MouseEventHandler(tlacitko_mysOdklikPozadi);
-            znovu.Tag = Hra.levely.aktualni_level;
             znovu.Click += tlacitko_prepni_Bezi_Click;
 
             cil.Controls.Add(znovu);
         }
         private static void tlacitko_prepni_Bezi_Click(object sender, EventArgs e)
         {
-            ZmenStavHryNa(StavHry.bezi, Int32.Parse( ((Button)sender).Tag.ToString() ) );
+            //klikame na znovu
+            if (((Button)sender).Tag == null)
+                ZmenStavHryNa(StavHry.bezi, Hra.levely.aktualni_level);
+            //nastavujeme novy level
+            else
+                ZmenStavHryNa(StavHry.bezi, Int32.Parse(((Button)sender).Tag.ToString()) );
         }
         private static void tlacitko_prepni_Napoveda_Click(object sender, EventArgs e)
         {

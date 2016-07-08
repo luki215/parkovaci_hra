@@ -62,6 +62,24 @@
     <Compile Include="Levely.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="pomocne_soubory\auta\bile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pomocne_soubory\auta\bile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pomocne_soubory\levely\Level1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pomocne_soubory\levely\Level1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pomocne_soubory\levely\Level1_min.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pomocne_soubory\levely\Level1_prekazky.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="pomocne_soubory\levely\mapa1_min.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
