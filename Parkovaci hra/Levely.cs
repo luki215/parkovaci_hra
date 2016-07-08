@@ -52,7 +52,7 @@ namespace Parkovaci_hra
             public Bitmap prekazky;
             PointF pozice_auta;
             int uhel_auta;
-            Color barva_cile;
+            public Color barva_cile;
             string cesta_k_autu;
 
             public Level(string cesta_konfig_souboru)

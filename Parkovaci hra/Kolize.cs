@@ -110,6 +110,8 @@ namespace Parkovaci_hra
             static PotrebnyPixel[] hranice_auta;
             static int sirka_obrazku;
             static int vyska_obrazku;
+            static Color barva_cile = ((Levely.Level)Hra.levely.levely[Hra.levely.aktualni_level]).barva_cile;
+            
             public static void NactiAuto(Bitmap auto)
             {
                 PraceSObrazkem auto_pracovni_obr = new PraceSObrazkem();
@@ -271,8 +273,7 @@ namespace Parkovaci_hra
                     if (hranice_auta[counter] != null && hranice_auta[counter].potrebny)
                     {
                         //pokud je barva cile
-
-                        if (rgbaValues[counter*4] != 40 || rgbaValues[counter*4+1] != 173 || rgbaValues[counter*4+2] != 40 )
+                        if (rgbaValues[counter*4] != barva_cile.B || rgbaValues[counter*4+1] != barva_cile.G || rgbaValues[counter*4+2] != barva_cile.R )
                         {
                             //vykresleni kontrolnich cilovych bodu
                             if (Hra.ShowDebug)
