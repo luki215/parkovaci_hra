@@ -1,0 +1,7 @@
+﻿Pozadi (980x600) : mapa1.png
+Miniatura (170x104) : mapa1_min.png
+Prekazky (980x600): prekazky1.png
+Pozice auta: 27; 455
+Uhel auta: 0
+Barva cile: 40, 173, 40
+Auto: Auto.txt

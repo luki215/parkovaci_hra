@@ -13,15 +13,42 @@ namespace Parkovaci_hra
 {
     namespace Auto
     {
-        
-       
+
+
+        class StisknuteSipky
+        {
+            //pole, v pořadí hore, dole, vlevo, vpravo
+            public static bool[] sipky = new bool[4];
+
+            public static void Zjisti()
+            {
+                /* hack klávesnice */
+                var left = KeyboardInfo.GetKeyState(Keys.Left);
+                var right = KeyboardInfo.GetKeyState(Keys.Right);
+                var up = KeyboardInfo.GetKeyState(Keys.Up);
+                var down = KeyboardInfo.GetKeyState(Keys.Down);
+
+
+                StisknuteSipky.sipky[0] = (up.IsPressed) ? true : false;
+                StisknuteSipky.sipky[1] = (down.IsPressed) ? true : false;
+                StisknuteSipky.sipky[2] = (left.IsPressed) ? true : false;
+                StisknuteSipky.sipky[3] = (right.IsPressed) ? true : false;
+                if (sipky[0] && sipky[1])
+                    sipky[0] = sipky[1] = false;
+                if (sipky[2] && sipky[3])
+                    sipky[2] = sipky[3] = false;
+
+
+            }
+        }
+
         class Vlastnosti
         {
-            public int pridani_plynu_v_kazdem_kroku = 100;
-            public int maximalni_plyn = 5000;
-            public int minimalni_plyn = -3000;
-            public int max_otoceni = 45;
-
+            public int pridani_plynu_v_kazdem_kroku;
+            public int maximalni_plyn;
+            public int minimalni_plyn;
+            public int max_otoceni;
+            public int rychlost_toceni;
             
         }
         class Stav
@@ -55,7 +82,7 @@ namespace Parkovaci_hra
                 }
             }
 
-            public PointF pozice = new PointF(-120, 340);
+            public PointF pozice;
             private float _uhel_natoceni = 0;
             public float UhelNatoceni {
                 get { return _uhel_natoceni; }
@@ -71,19 +98,28 @@ namespace Parkovaci_hra
             public Stav stav = new Stav();
 
 
-            public Auto(string cesta, Graphics g)
+            public Auto(string cesta, PointF pozice_auta, int uhel_natoceni)
             {
-                NactiSe("konfigurace\\" + cesta);
-                this.g = g;
+                NactiSe("pomocne_soubory\\auta\\" + cesta);
+                stav.UhelNatoceni = uhel_natoceni;
+                stav.pozice = pozice_auta;
+                this.g = Hra.g;
             }
             public void NactiSe(string cesta)
             {
                 using (StreamReader sr = new StreamReader(cesta))
                 {
-                    String obrazek_cesta = "obrazky\\" + sr.ReadLine().Split(':')[1].Substring(1);
-                    obrazek = new Bitmap(obrazek_cesta);
-                    obrazek = new Bitmap(obrazek, new Size(obrazek.Size.Width, obrazek.Size.Height)); 
+                    String cteni = "pomocne_soubory\\auta\\" + sr.ReadLine().Split(':')[1].Substring(1);
+                    obrazek = new Bitmap(cteni);
+
+                    vlastnosti.pridani_plynu_v_kazdem_kroku = Int32.Parse( sr.ReadLine().Split(':')[1].Substring(1) );
+                    vlastnosti.maximalni_plyn = Int32.Parse(sr.ReadLine().Split(':')[1].Substring(1));
+                    vlastnosti.minimalni_plyn = Int32.Parse(sr.ReadLine().Split(':')[1].Substring(1));
+                    vlastnosti.max_otoceni = Int32.Parse(sr.ReadLine().Split(':')[1].Substring(1));
+                    vlastnosti.rychlost_toceni = Int32.Parse(sr.ReadLine().Split(':')[1].Substring(1));
+                    Console.WriteLine(vlastnosti.ToString());
                 }
+                
 
             }
             public void SpoctiPlyn()
@@ -123,12 +159,11 @@ namespace Parkovaci_hra
                 stav.Plyn = hodnota_plynu;
 
             }
-
             public void SpoctiUhelKol()
             {
                 StisknuteSipky.Zjisti();
                 //toci vlevo
-                int toceni = 5;
+                int toceni = vlastnosti.rychlost_toceni;
                 if (StisknuteSipky.sipky[2])
                 {
                     stav.UhelKol -= toceni;
@@ -149,12 +184,11 @@ namespace Parkovaci_hra
                        
                 }
             }
-
             public void SpoctiUhelAuta()
             {
                 stav.UhelNatoceni += ((float)stav.UhelKol / 90) * 4 * ((float)stav.Plyn / vlastnosti.maximalni_plyn);
             }
-            public Bitmap VratOtoceneAuto()
+            public Bitmap VratOtoceneAuto(ref Size posunObrazku)
             {
                 int max = Math.Max(obrazek.Width, obrazek.Height);
 
@@ -190,7 +224,8 @@ namespace Parkovaci_hra
                 gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 //now draw our new image onto the graphics object
                
-                gfx.DrawImage(obrazek, new Point((3*max)/2 - obrazek.Size.Width / 2, (3 * max) / 2 - obrazek.Size.Height/2));
+                posunObrazku = new Size(-(3 * max) / 2 + obrazek.Size.Width / 2, -(3 * max) / 2 + obrazek.Size.Width / 2);
+                gfx.DrawImage(obrazek, new Point((3 * max) / 2 - obrazek.Size.Width / 2, (3 * max) / 2 - obrazek.Size.Height / 2));
 
                 //dispose of our Graphics object
                 gfx.Dispose();
@@ -198,8 +233,6 @@ namespace Parkovaci_hra
                 //return the image
                 return bmp;
         }
-
-
 
             public void Krok(out Bitmap obrazek_auta, out Point pozice)
             {
@@ -211,7 +244,8 @@ namespace Parkovaci_hra
                             */
 
                 Bitmap rotatedBmp;
-                rotatedBmp = VratOtoceneAuto();
+                Size posunObrazku = new Size() ;
+                rotatedBmp = VratOtoceneAuto(ref posunObrazku);
 
                 
                 
@@ -225,40 +259,14 @@ namespace Parkovaci_hra
 
                 //return
                 obrazek_auta = rotatedBmp;
-                pozice = new Point((int) stav.pozice.X, (int) stav.pozice.Y);
-                
+                pozice = Point.Add( new Point((int) stav.pozice.X , (int) stav.pozice.Y), posunObrazku);
+
+
 
 
             }
         }
 
-
-        class StisknuteSipky
-        {
-            //pole, v pořadí hore, dole, vlevo, vpravo
-            public static bool[] sipky = new bool[4];
-
-            public static void Zjisti()
-            {
-                /* hack klávesnice */
-                var left = KeyboardInfo.GetKeyState(Keys.Left);
-                var right = KeyboardInfo.GetKeyState(Keys.Right);
-                var up = KeyboardInfo.GetKeyState(Keys.Up);
-                var down = KeyboardInfo.GetKeyState(Keys.Down);
-
-
-                StisknuteSipky.sipky[0] = (up.IsPressed) ? true : false;
-                StisknuteSipky.sipky[1] = (down.IsPressed) ? true : false;
-                StisknuteSipky.sipky[2] = (left.IsPressed) ? true : false;
-                StisknuteSipky.sipky[3] = (right.IsPressed) ? true : false;
-                if(sipky[0] && sipky[1])
-                    sipky[0] = sipky[1] = false;
-                if (sipky[2] && sipky[3])
-                    sipky[2] = sipky[3] = false;
-
-
-            }
-        }
-    }
+   }
 
 }

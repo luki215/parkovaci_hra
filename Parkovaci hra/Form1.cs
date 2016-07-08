@@ -25,13 +25,15 @@ namespace Parkovaci_hra
             Hra.Nainicializuj(frame, this);           
            
         }
-       
+
         protected override void OnPaint(PaintEventArgs e)
         {
+            base.OnPaint(e);
+           //if(Hra.stav == StavHry.bezi)
             e.Graphics.DrawImage(frame, 0, 0);
         }
-      
-      
+
+
     }
 
 }

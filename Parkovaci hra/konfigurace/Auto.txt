@@ -1,2 +1,0 @@
-﻿Obrázek: auto.png
-Pozice: 10;10

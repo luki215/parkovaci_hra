@@ -14,13 +14,7 @@ using System.Threading.Tasks;
     Potřeba načíst barvu cíle a předat sem
 
     */
-
-
-
-
-
-
-
+    
 
 namespace Parkovaci_hra
 {
@@ -126,8 +120,7 @@ namespace Parkovaci_hra
                 hranice_auta = new PotrebnyPixel[rgbaValues.Length/4];
                 sirka_obrazku = auto.Width;
                 vyska_obrazku = auto.Height;
-
-
+                
 
                 bool horizontalni_pixelove_pocitadlo = false;
                 bool []vertikalni_pixely = new bool[sirka_obrazku];
@@ -201,7 +194,6 @@ namespace Parkovaci_hra
                 
                 NactiAuto(auto);
                 
-
                 PraceSObrazkem pracovni_vyrez = new PraceSObrazkem();
                 byte[] vyrez_v_poli_bytu = pracovni_vyrez.ZalockujObrazekAVratPoleBytu(ref vyrez);
                  
@@ -215,7 +207,10 @@ namespace Parkovaci_hra
                     Hra.g.DrawImage(vyrez, Hra.frame.Width-vyrez.Width-20, 20);
                     Hra.g.DrawRectangle(Pens.White, Hra.frame.Width - vyrez.Width - 20, 20, vyrez.Width, vyrez.Height);
                 }
-
+                else
+                {
+                    pracovni_vyrez.OdlockujAVratUpravenyObrazek();
+                }
                 if (kolize) return StavHry.kolize;
                 if (cil) return StavHry.cil;
 
@@ -223,9 +218,7 @@ namespace Parkovaci_hra
             }
 
             public static bool BylaKolize(ref byte[] rgbaValues)
-            {
-                
-                                                
+            {                               
                 /* prochazime byty pixelů 
                     0. = Modrá
                     1. = Zelená

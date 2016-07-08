@@ -1,0 +1,6 @@
+﻿Obrázek: auto.png
+Přidání plynu v každém kroku: 400
+Maximální plyn: 8000
+Minimalní plyn: -3000
+Max otočení: 80
+Rychlost otáčení: 10
