@@ -189,7 +189,6 @@ namespace Parkovaci_hra
 
 
             }
-            
             public static StavHry VratStavHry(Bitmap auto, Point pozice_auta)
             {
                 Bitmap vyrez = PraceSObrazkem.VratVyrezAUpravAutoPodleNej(ref auto, pozice_auta);
@@ -218,7 +217,6 @@ namespace Parkovaci_hra
 
                 return StavHry.bezi;
             }
-
             public static bool BylaKolize(ref byte[] rgbaValues)
             {                               
                 /* prochazime byty pixelů 
@@ -255,8 +253,6 @@ namespace Parkovaci_hra
                 }
                 return false;
             }
-
-
             public static bool JsmeVCili(ref byte[] rgbaValues)
             {
                 
