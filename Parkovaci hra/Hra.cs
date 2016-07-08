@@ -17,11 +17,15 @@ namespace Parkovaci_hra
         public static Graphics g;
         public static Timer casovac;
         public static Form1 form;
-        public static bool ShowDebug = false;
         public static string cestaLevelu = "pomocne_soubory\\levely\\";
         public static Levely.SpravceLevelu levely = new Levely.SpravceLevelu();
         public static StavHry stav;
         public static Bitmap TlacitkaObr = new Bitmap("pomocne_soubory\\program\\ikonky.png");
+
+
+        public static bool ShowDebug = false;
+
+
         public static void Nainicializuj(Bitmap frame, Form1 form)
         {
             Hra.frame = frame;
@@ -35,85 +39,11 @@ namespace Parkovaci_hra
 
             g = Graphics.FromImage(Hra.frame);
 
-            ZmenStavHryNa(StavHry.start);
+            Stavy.ZmenStavHryNa(StavHry.start);
             
-
-
-
-
         }
         
-
-
-
-        public static void ZmenStavHryNa(StavHry stav, int cislo_levelu=0)
-        {
-            //uklidime minuly stav
-            switch (Hra.stav)
-            {
-                case StavHry.start: Stavy.start.Hide();
-                    break;
-                case StavHry.napoveda: Stavy.napoveda.Hide();
-                    break;
-                case StavHry.menu: Stavy.menu.Hide();
-                    break;
-                case StavHry.bezi:
-                    { casovac.Enabled = false;  }
-                    break;
-                case StavHry.kolize:
-                    { Stavy.kolize.Hide(); }
-                    break;
-                case StavHry.cil:
-                    { Stavy.cil.Hide(); }
-                    break;
-                default:
-                    break;
-            }
-
-
-            //udelame novinky
-            switch (stav)
-            {
-                case StavHry.start:
-                    { Stavy.start.Show(); Hra.stav = StavHry.start; break; }
-                    
-                case StavHry.napoveda:
-                    { Stavy.napoveda.Show(); Hra.stav = StavHry.napoveda; break; }
-                case StavHry.menu:
-                    { Stavy.menu.Show(); Hra.stav = StavHry.menu; break; }
-                case StavHry.bezi:
-                    {
-                        levely.NastavLevel(cislo_levelu);
-                        casovac.Enabled = true;
-                        Hra.stav = StavHry.bezi;
-                        break;
-                    }
-                case StavHry.kolize:
-                    {
-                        Hra.stav = StavHry.kolize;
-                        Stavy.kolize.Show();
-                        break;
-                    }
-                case StavHry.cil:
-                    {
-                        Hra.stav = StavHry.cil;
-                        Stavy.cil.Show();
-                        break;
-                    }
-                default:
-                    break;
-            }
-
-        }
-
-
-
-
-
-
-
-
-
+        
         private static void Tick(object sender, EventArgs e)
         {
                levely.VykresliPozadiLevelu();
@@ -133,7 +63,7 @@ namespace Parkovaci_hra
                 StavHry novyStav = Kolize.Kolize.VratStavHry(auto, pozice);
                 Console.WriteLine(stav);
                 if (novyStav != StavHry.bezi)
-                    ZmenStavHryNa(novyStav);
+                    Stavy.ZmenStavHryNa(novyStav);
 
                 //vykreslime uzivateli
                 if(stav == StavHry.bezi)
@@ -144,6 +74,8 @@ namespace Parkovaci_hra
     
 
 
+    
+
     class Stavy
     {
         public static Panel start;
@@ -152,6 +84,39 @@ namespace Parkovaci_hra
         public static Panel kolize;
         public static Panel cil;
 
+        public static void ZmenStavHryNa(StavHry stav, int cislo_levelu = 0)
+        {
+            //uklidime minuly stav
+            switch (Hra.stav)
+            {
+                case StavHry.start:     start.Hide(); break;
+                case StavHry.napoveda:  napoveda.Hide(); break;
+                case StavHry.menu:      menu.Hide(); break;
+                case StavHry.bezi:      Hra.casovac.Enabled = false; break;
+                case StavHry.kolize:    kolize.Hide(); break;
+                case StavHry.cil:       cil.Hide(); break;
+                default: break;
+            }
+
+            //udelame novinky
+            switch (stav)
+            {
+                case StavHry.start:     { start.Show(); Hra.stav = stav; break; }
+                case StavHry.napoveda:  { napoveda.Show(); Hra.stav = stav; break; }
+                case StavHry.menu:      { menu.Show(); Hra.stav = stav; break; }
+                case StavHry.bezi:      {
+                        Hra.levely.NastavLevel(cislo_levelu);
+                        Hra.casovac.Enabled = true;
+                        Hra.stav = stav;
+                        break;
+                    }
+                case StavHry.kolize:   { kolize.Show(); Hra.stav = stav; break; }
+                case StavHry.cil:      { cil.Show(); Hra.stav = stav; break; }
+                default: break;
+            }
+        }
+
+        /* odsud tvori rozhrani - prevazne design prvku + natstvení kam který směřuje */
         public static void UdelejFormulareVsechStavu()
         {
             UdelejStart();
@@ -160,9 +125,6 @@ namespace Parkovaci_hra
             UdelejKolize();
             UdelejCil();
         }
-
-       
-
         private static void UdelejStart() {
 
             start = new Panel();
@@ -236,7 +198,6 @@ namespace Parkovaci_hra
 
             napoveda.Controls.Add(zpet);
         }
-
         private static void UdelejMenu()
         {
             menu = new Panel();
@@ -340,7 +301,6 @@ namespace Parkovaci_hra
             kolize.Controls.Add(znovu);
 
         }
-
         private static void UdelejCil()
         {
             cil = new Panel();
@@ -390,26 +350,22 @@ namespace Parkovaci_hra
 
             cil.Controls.Add(znovu);
         }
-
         private static void tlacitko_prepni_Bezi_Click(object sender, EventArgs e)
         {
-            Hra.ZmenStavHryNa(StavHry.bezi, Int32.Parse( ((Button)sender).Tag.ToString() ) );
+            ZmenStavHryNa(StavHry.bezi, Int32.Parse( ((Button)sender).Tag.ToString() ) );
         }
-
         private static void tlacitko_prepni_Napoveda_Click(object sender, EventArgs e)
         {
-            Hra.ZmenStavHryNa(StavHry.napoveda);
+            ZmenStavHryNa(StavHry.napoveda);
         }
-
         private static void tlacitko_prepni_Menu_Click(object sender, EventArgs e)
         {
-            Hra.ZmenStavHryNa(StavHry.menu);
+            ZmenStavHryNa(StavHry.menu);
         }
         private static void tlacitko_prepni_Start_Click(object sender, EventArgs e)
         {
-            Hra.ZmenStavHryNa(StavHry.start);
+            ZmenStavHryNa(StavHry.start);
         }
-
         private static void tlacitko_mysKlikPozadi(object sender, EventArgs e)
         {
             int poziceHoverIkonky = Int32.Parse(((Button)sender).Image.Tag.ToString()) + 2 * 54;
@@ -422,14 +378,12 @@ namespace Parkovaci_hra
             ((Button)sender).Image = Hra.TlacitkaObr.Clone(new Rectangle(0, poziceHoverIkonky, 218, 54), System.Drawing.Imaging.PixelFormat.DontCare);
             ((Button)sender).Image.Tag = poziceHoverIkonky;
         }
-
         private static void tlacitko_hoverPozadiOut(object sender, EventArgs e)
         {
             int poziceHoverIkonky = Int32.Parse( ((Button)sender).Image.Tag.ToString()) ;
             ((Button)sender).Image = Hra.TlacitkaObr.Clone(new Rectangle(0, poziceHoverIkonky, 218, 54), System.Drawing.Imaging.PixelFormat.DontCare);
             ((Button)sender).Image.Tag = poziceHoverIkonky;
         }
-
         private static void tlacitko_hoverPozadiIn(object sender, EventArgs e)
         {
             int poziceHoverIkonky = Int32.Parse( ((Button)sender).Image.Tag.ToString() ) + 54;
