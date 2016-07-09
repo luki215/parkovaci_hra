@@ -5,6 +5,11 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parkovaci hra", "Parkovaci hra\Parkovaci hra.csproj", "{71A51866-ABA6-453B-AA33-5DA7CEC86C32}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E3133C37-04A0-4E74-8EC2-6E14EA2971F8}"
+	ProjectSection(SolutionItems) = preProject
+		Dokumentace.docx = Dokumentace.docx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

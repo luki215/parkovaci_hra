@@ -188,6 +188,8 @@ namespace Parkovaci_hra
             {
                 stav.UhelNatoceni += ((float)stav.UhelKol / 90) * 4 * ((float)stav.Plyn / vlastnosti.maximalni_plyn);
             }
+
+            //pokud chceme videt, co nam vraci => odkomentovat gfx.Clear(Color.White); a mit debug mode formulare zaply 
             public Bitmap VratOtoceneAuto(ref Size posunObrazku)
             {
                 int max = Math.Max(obrazek.Width, obrazek.Height);
@@ -222,8 +224,10 @@ namespace Parkovaci_hra
                 //set the InterpolationMode to HighQualityBicubic so to ensure a high
                 //quality image once it is transformed to the specified size
                 gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                
                 //now draw our new image onto the graphics object
-               
+                
+                //gfx.Clear(Color.White);
                 posunObrazku = new Size(-(3 * max) / 2 + obrazek.Size.Width / 2, -(3 * max) / 2 + obrazek.Size.Width / 2);
                 gfx.DrawImage(obrazek, new Point((3 * max) / 2 - obrazek.Size.Width / 2, (3 * max) / 2 - obrazek.Size.Height / 2));
 
@@ -234,7 +238,7 @@ namespace Parkovaci_hra
                 return bmp;
         }
 
-            public void Krok(out Bitmap obrazek_auta, out Point pozice)
+            public void Krok(out Bitmap obrazek_auta, out Point pozice_auta)
             {
                 SpoctiPlyn();
                 SpoctiUhelKol();
@@ -259,7 +263,7 @@ namespace Parkovaci_hra
 
                 //return
                 obrazek_auta = rotatedBmp;
-                pozice = Point.Add( new Point((int) stav.pozice.X , (int) stav.pozice.Y), posunObrazku);
+                pozice_auta = Point.Add( new Point((int) stav.pozice.X , (int) stav.pozice.Y), posunObrazku);
 
 
 

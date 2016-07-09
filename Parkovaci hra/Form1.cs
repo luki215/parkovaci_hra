@@ -26,10 +26,12 @@ namespace Parkovaci_hra
            
         }
 
+
+        /*  Hack pro plynule vykreslovani grafiky - nekreslíme do formuláře, 
+            ale do bitmapy frame, tu pak dáme vykreslit až budeme chtít pomocí form.Invalidate() */
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-           //if(Hra.stav == StavHry.bezi)
             e.Graphics.DrawImage(frame, 0, 0);
         }
 
