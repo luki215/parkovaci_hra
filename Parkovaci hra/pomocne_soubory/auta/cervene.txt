@@ -1,0 +1,6 @@
+﻿Obrázek: cervene.png
+Přidání plynu v každém kroku: 100
+Maximální plyn: 6000
+Minimalní plyn: -2000
+Max otočení: 70
+Rychlost otáčení: 10

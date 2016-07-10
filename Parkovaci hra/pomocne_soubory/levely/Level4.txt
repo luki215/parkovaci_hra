@@ -1,0 +1,7 @@
+Pozadi (980x600) : Level4.png
+Miniatura (170x104) : Level4_min.png
+Prekazky (980x600): Level4_prekazky.png
+Pozice auta: 821; 9
+Uhel auta: -90
+Barva cile: 40, 173, 40
+Auto: Bile.txt

@@ -1,0 +1,7 @@
+Pozadi (980x600) : Level3.png
+Miniatura (170x104) : Level3_min.png
+Prekazky (980x600): Level3_prekazky.png
+Pozice auta: 910; 100
+Uhel auta: -90
+Barva cile: 40, 173, 40
+Auto: Cervene.txt

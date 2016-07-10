@@ -1,0 +1,7 @@
+Pozadi (980x600) : Level5.png
+Miniatura (170x104) : Level5_min.png
+Prekazky (980x600): Level5_prekazky.png
+Pozice auta: 863; 15
+Uhel auta: 180
+Barva cile: 40, 173, 40
+Auto: Auto.txt

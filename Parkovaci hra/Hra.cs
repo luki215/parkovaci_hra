@@ -23,7 +23,7 @@ namespace Parkovaci_hra
         public static Bitmap TlacitkaObr = new Bitmap("pomocne_soubory\\program\\ikonky.png");
 
         //zobrazi nam debug vyrez - kolizni + parkovaci body
-        public static bool ShowDebug = true;
+        public static bool ShowDebug = false;
 
         public static void Nainicializuj(Bitmap frame, Form1 form)
         {
